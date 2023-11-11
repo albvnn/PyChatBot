@@ -46,13 +46,16 @@ def clean_files_punctuation():
     directory = "./cleaned"
     files_names = list_of_files(directory, "txt")
     for i in files_names:
-        with open('./cleaned/' + i, "a") as f:
-            for l in f.readlines():
+        with open('./cleaned/' + i, "r") as fr, open('./cleaned/' + i + "temp", "w") as fw:
+            for l in fr.readlines():
                 for c in l:
                     print(ord(c))
-                    if 97 > ord(c) > 122:
+                    if 33 <= ord(c) <= 47 or 58 <= ord(c) <= 64 or 91 <= ord(c) <= 96:
                         if c == " " or c == "-" or c == "'":
                             c = " "
                         else:
                             c = ""
-
+                    fw.write(c)
+                    fw.write(c)
+        os.remove('./cleaned/' + i)
+        os.rename('./cleaned/' + i + "temp", './cleaned/' + i)
