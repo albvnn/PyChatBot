@@ -56,6 +56,5 @@ def clean_files_punctuation():
                         else:
                             c = ""
                     fw.write(c)
-                    fw.write(c)
         os.remove('./cleaned/' + i)
         os.rename('./cleaned/' + i + "temp", './cleaned/' + i)
