@@ -1,6 +1,6 @@
 from functions import *
 
 if __name__ == "__main__":
-    print(presidents_first_name('Chirac'))
-
-print("test")
+    clean_files_lower_case()
+    clean_files_punctuation()
+    print(idf())

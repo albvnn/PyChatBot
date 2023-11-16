@@ -49,7 +49,6 @@ def clean_files_punctuation():
         with open('./cleaned/' + i, "r") as fr, open('./cleaned/' + i + "temp", "w") as fw:
             for l in fr.readlines():
                 for c in l:
-                    print(ord(c))
                     if 33 <= ord(c) <= 47 or 58 <= ord(c) <= 64 or 91 <= ord(c) <= 96:
                         if c == " " or c == "-" or c == "'":
                             c = " "
@@ -58,3 +57,29 @@ def clean_files_punctuation():
                     fw.write(c)
         os.remove('./cleaned/' + i)
         os.rename('./cleaned/' + i + "temp", './cleaned/' + i)
+
+#TF (Term Frequency)
+def tf(str):
+    L = str.split(' ')
+    dico = {}
+    for i in range(0,len(L)):
+        if L[i] in dico :
+            dico[L[i]] += 1
+        else:
+            dico[L[i]] = 1
+    return dico
+
+def idf(directory = "./cleaned"):
+    files_names = list_of_files(directory, "txt")
+    fll = ""
+    for i in files_names:
+        fl = ""
+        with open(directory + "/" + i, "r") as f:
+            ls = f.readlines()
+            for l in ls:
+                fl += l[:-1] + " "
+            fll += fl
+    d = tf(fll)
+    return d
+
+
