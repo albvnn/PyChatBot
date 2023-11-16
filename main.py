@@ -1,6 +1,11 @@
 from functions import *
 
 if __name__ == "__main__":
-    clean_files_lower_case()
-    clean_files_punctuation()
-    print(idf())
+    matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    print(transpose_matrix(tf_idf()))
+
+
