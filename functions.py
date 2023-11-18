@@ -114,6 +114,14 @@ def tf_idf(directory="./cleaned"):
                 dtf[k] = 0
             tf_idf_doc.append(dtf[k]*didf[k])
         tf_idf_matrix.append(tf_idf_doc)
-    return tf_idf_matrix                                    #we have to transpose the result !!!
+    return transpose_matrix(tf_idf_matrix)                                    #we have to transpose the result !!!
 
+
+def tf_idf_dico(matrix_tfidf, directory="./cleaned"):
+    tfidfdico = {"files" : list_of_files(directory, "txt")}
+    i = 0
+    for k in idf(directory).keys():
+        tfidfdico[k] = matrix_tfidf[i]
+        i += 1
+    return tfidfdico
 

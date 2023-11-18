@@ -1,11 +1,12 @@
 from functions import *
+from features import *
+from GUI import *
 
 if __name__ == "__main__":
-    matrix = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
-    print(transpose_matrix(tf_idf()))
+    clean_files_lower_case()
+    clean_files_punctuation()
+
+
+
 
 
