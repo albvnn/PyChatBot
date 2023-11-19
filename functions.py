@@ -73,16 +73,20 @@ def idf(directory = "./cleaned"):
     files_names = list_of_files(directory, "txt")
     for i in files_names:
         with open(directory + "/" + i, "r") as f:
+            L=[]
             content = f.readlines()
             for l in content:
                 d = tf(l[:-1])
                 for k, v in d.items():
-                    if k not in fd.keys():
-                        fd[k] = 1
-                    else:
-                        fd[k] += 1
+                    if k not in L:
+                        L.append(k)
+            for i in set(L):
+                if i not in fd.keys():
+                    fd[i] = 1
+                else:
+                    fd[i] += 1
     for k, v in fd.items():
-        fd[k] = log(1/v)
+        fd[k] = log(1/(v/len(files_names)))
     return fd
 
 
@@ -118,10 +122,10 @@ def tf_idf(directory="./cleaned"):
 
 
 def tf_idf_dico(matrix_tfidf, directory="./cleaned"):
-    tfidfdico = {"files" : list_of_files(directory, "txt")}
+    tf_idf_dico = {"files" : list_of_files(directory, "txt")}
     i = 0
     for k in idf(directory).keys():
-        tfidfdico[k] = matrix_tfidf[i]
+        tf_idf_dico[k] = matrix_tfidf[i]
         i += 1
-    return tfidfdico
+    return tf_idf_dico
 

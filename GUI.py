@@ -15,7 +15,7 @@ def dis_gui():
     win.title('chatbot !')
     win.geometry('500x500')
 
-    btn = Button(win, text='Click me !', command=printSomething(important_words(tf_idf_dico(tf_idf()))))
+    btn = Button(win, text='Click me !', command=important_words(tf_idf_dico(tf_idf())))
     btn2 = Button(win, text='Click me ! 2', command=win.destroy)
     btn3 = Button(win, text='Click me !', command=win.destroy)
     btn4 = Button(win, text='Click me ! 2', command=win.destroy)
