@@ -1,31 +1,33 @@
-from functions import *
-from features import *
+from command_GUI import *
 from tkinter import *
 import time
 
-def printSomething(string):
-    # if you want the button to disappear:
-    # button.destroy() or button.pack_forget()
-    label = Label(win, text= str(string))
-    #this creates a new label to the GUI
-    label.pack()
+def get_sending():
+    global LabelOnTime
+    LabelOnTime = str(RequestLabel.get())
+    return str(LabelOnTime)
+def printS():
+    global LabelOnTime
+    get_sending()
+    a = dire(LabelOnTime)
+    DisplayLabel.config(text=a)
 
 def dis_gui():
+    global RequestLabel
+    global DisplayLabel
     win = Tk()
-    win.title('chatbot !')
-    win.geometry('500x500')
+    win.title('Bobby - The greatest chatbot !')
+    win.geometry('900x600')
+    win.resizable(width=False, height=False)
+    win.configure(background="#404258")
 
-    btn = Button(win, text='Click me !', command=important_words(tf_idf_dico(tf_idf())))
-    btn2 = Button(win, text='Click me ! 2', command=win.destroy)
-    btn3 = Button(win, text='Click me !', command=win.destroy)
-    btn4 = Button(win, text='Click me ! 2', command=win.destroy)
-    btn5 = Button(win, text='Click me !', command=win.destroy)
-    btn6 = Button(win, text='Click me ! 2', command=win.destroy)
-    btn.pack(ipadx=5, ipady=5, expand=True)
-    btn2.pack(ipadx=5, ipady=5, expand=True)
-    btn3.pack(ipadx=5, ipady=5, expand=True)
-    btn4.pack(ipadx=5, ipady=5, expand=True)
-    btn5.pack(ipadx=5, ipady=5, expand=True)
-    btn6.pack(ipadx=5, ipady=5, expand=True)
+    DisplayLabel = Label(win, height=20, width=63, font="Roboto", bg="#404258", fg="white", bd=0, anchor="nw", wraplength=650, justify="left")
+    DisplayLabel.place(relx=0.1, rely=0.1)
+    RequestLabel = Entry(win, width=60, font="Roboto", bg="#474E68", fg="white", insertbackground="white", bd=0)
+    RequestLabel.place(relx=0.1, rely=0.9)
+    ButtonSend = Button(win, text="Send", command=printS, height=1, pady=10, padx=5, width=5, bd=0, bg="#474E68", fg="white")
+    ButtonSend.place(relx=0.85, rely=0.9)
+
+    #Button(win, text="Disable", fg="white", bg="black", width=20).pack(pady=20)
 
     win.mainloop()

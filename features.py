@@ -23,18 +23,19 @@ def most_word_of_chirac(dico_tfidf):        #feature 3
     mink = ""
     minv = 1000
     for k, v in dico_tfidf.items():
-        if minv > v[0] + v[1] / 2:
+        if minv > v[0] + v[1] / 2 > 0:
             mink = k
             minv = v[0] + v[1] / 2
+            print(mink, minv)
     return mink
 
 def nations_word_on_speeches(dico_tfidf):       #feature 4
     L = []
-    del dico_tfidf["files"]
     minname = ""
     minv = 0
     for k, v in dico_tfidf.items():
         for i in range(len(v)):
+            if type(v[i]) is int or type(v[i]) is float:
                 if k == "nation" and v[i] != 0:
                     if names_extract_titles(dico_tfidf["files"][i]) not in L:
                         L.append(names_extract_titles(dico_tfidf["files"][i]))
@@ -46,7 +47,6 @@ def nations_word_on_speeches(dico_tfidf):       #feature 4
 def first_pres_to_talk_eco(dico_tfidf):         #feature 5
     minname = ""
     minv = 0
-    del dico_tfidf["files"]
     for k, v in dico_tfidf.items():
         for i in range(len(v)):
             if type(v[i]) is int or type(v[i]) is float:
@@ -59,7 +59,6 @@ def first_pres_to_talk_eco(dico_tfidf):         #feature 5
 def all_pres_say_words(dico_tfidf):         #feature 6
     L=[]
     status=True
-    del dico_tfidf["files"]
     for k, v in dico_tfidf.items():
         for i in v:
             if i == 0:
