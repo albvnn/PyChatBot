@@ -27,12 +27,12 @@ def dire(c):
                       "\n - /help : lists of the differents functions"
                       "\n - /info : some info about me ! "
                       "\n - /features : lists of the differents features "
-                      "\n - /feature1 : f1 "
-                      "\n - /feature2 : f2 "
-                      "\n - /feature3 : f3 "
-                      "\n - /feature4 : f4 "
-                      "\n - /feature5 : f5 "
-                      "\n - /feature6 : f6 "
+                      "\n - /feature1 : Displays words with a TD-IDF equal to 0"
+                      "\n - /feature2 : Identifies and display the most important word in the documents analyzed."
+                      "\n - /feature3 : Display the words most often repeated by President Chirac"
+                      "\n - /feature4 : Show the presidents who have spoken of the word 'Nation', and indicate the one who said it the most. "
+                      "\n - /feature5 : Show the first president to talk about climate ('climat') and ecology ('écologie')."
+                      "\n - /feature6 : Quel(s) mot(s) tous les présidents ont-ils mentionné ? (Excluding 'unimportant' words)"
                       "\n - /clean : for clean the previous discussion between you and me ! "
                       "\n - /exit : exit the app ")
         elif c == command[1]:
