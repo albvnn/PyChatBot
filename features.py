@@ -4,7 +4,7 @@ def important_words(dico_tfidf):           #feature 1
     L = []
     del dico_tfidf["files"]
     for k, v in dico_tfidf.items():
-        if sum(v)/len(v) > 0:
+        if sum(v)/len(v) == 0.0:
             L.append(k)
     return L
 
@@ -16,18 +16,25 @@ def most_important_word(dico_tfidf):        #feature 2
         if sum(v)/len(v) > maxv:
             maxk = k
             maxv = sum(v)/len(v)
-    return maxk, maxv
+    return maxk
 
-def most_word_of_chirac(dico_tfidf):        #feature 3
-    del dico_tfidf["files"]
-    mink = ""
-    minv = 1000
-    for k, v in dico_tfidf.items():
-        if minv > v[0] + v[1] / 2 > 0:
-            mink = k
-            minv = v[0] + v[1] / 2
-            print(mink, minv)
-    return mink
+def most_word_of_chirac():        #feature 3
+    fl = ""
+    with open('./cleaned/Nomination_Chirac1.txt', 'r') as f1, open('./cleaned/Nomination_Chirac2.txt', 'r') as f2:
+        ls = f1.readlines()
+        ls2 = f2.readlines()
+        for l in ls:
+            fl += l[:-1] + " "
+        for k in ls2:
+            fl += k[:-1] + " "
+        fl = tf(fl)
+    maxiv = 0
+    maxik = ""
+    for k, v in fl.items():
+        if v >= maxiv:
+            maxiv = v
+            maxik = k
+    return maxik, maxiv
 
 def nations_word_on_speeches(dico_tfidf):       #feature 4
     L = []
@@ -56,13 +63,7 @@ def first_pres_to_talk_eco(dico_tfidf):         #feature 5
                         minv = v[i]
     return minname
 
-def all_pres_say_words(dico_tfidf):         #feature 6
-    L=[]
-    status=True
-    for k, v in dico_tfidf.items():
-        for i in v:
-            if i == 0:
-                status=False
-        if status:
-            L.append(k)
-    return L
+def all_pres_say_words():         #feature 6
+    '''Impossible ? If we want the words says by all the presidents we have idf = log(8/8) = log(1) = 0 and the only
+    words with this tf_idf score are the unimportant word...'''
+    return False

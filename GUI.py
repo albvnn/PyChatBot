@@ -1,21 +1,27 @@
 from tkinter import *
+from tkinter import ttk
+from features import *
+from functions import *
+from clean_functions import *
+
+d = clean_all_files()
 def get_sending():
     global LabelOnTime
-    LabelOnTime = str(RequestLabel.get())
+    LabelOnTime = str(requestlabel.get())
     return str(LabelOnTime)
 def printS():
     global LabelOnTime
     get_sending()
     a = dire(LabelOnTime)
     if a == "/clean":
-        DisplayLabel.config(state=NORMAL)
-        DisplayLabel.delete("1.0", "end")
-        DisplayLabel.config(state=DISABLED)
+        displaylabel.config(state=NORMAL)
+        displaylabel.delete("1.0", "end")
+        displaylabel.config(state=DISABLED)
     else:
-        DisplayLabel.config(state=NORMAL)
-        DisplayLabel.insert(INSERT, "\n\n" + "You : " + LabelOnTime + "\n\n" + "Bobby : " + a + "\n\n")
-        DisplayLabel.config(state=DISABLED)
-    RequestLabel.delete("0", "end")
+        displaylabel.config(state=NORMAL)
+        displaylabel.insert(INSERT, "\n\n" + "You : " + LabelOnTime + "\n\n" + "Bobby : " + a + "\n\n")
+        displaylabel.config(state=DISABLED)
+    requestlabel.delete("0", "end")
 
 def dire(c):
     command = ['/help', '/features', '/feature1', '/feature2', '/feature3', '/feature4', '/feature5', '/feature6',
@@ -27,30 +33,37 @@ def dire(c):
                       "\n - /help : lists of the differents functions"
                       "\n - /info : some info about me ! "
                       "\n - /features : lists of the differents features "
-                      "\n - /feature1 : f1 "
-                      "\n - /feature2 : f2 "
-                      "\n - /feature3 : f3 "
-                      "\n - /feature4 : f4 "
-                      "\n - /feature5 : f5 "
-                      "\n - /feature6 : f6 "
                       "\n - /clean : for clean the previous discussion between you and me ! "
                       "\n - /exit : exit the app ")
         elif c == command[1]:
-            answer = "LIST OF FEATURES"
+            answer = ("There is few features :"
+                      "\n - /feature1 : Displays words with a TD-IDF equal to 0, so the unimportant words."
+                      "\n - /feature2 : Identifies and display the most important word in the documents analyzed."
+                      "\n - /feature3 : Display the words most often repeated by President Chirac."
+                      "\n - /feature4 : Show the presidents who have spoken of the word 'Nation', and indicate the one who said it the most. "
+                      "\n - /feature5 : Show the first president to talk about climate ('climat') and ecology ('écologie')."
+                      "\n - /feature6 : What word(s) did all the presidents mention? (Excluding 'unimportant' words)")
         elif c == command[2]:
-            answer = "There is the list of least important words in the corpus of speeches : " + ", ".join(important_words(tf_idf_dico(tf_idf())))
+            answer = "There is the least important words in the corpus of speeches : " + ", ".join(important_words(tf_idf_dico(tf_idf(d), d)))
         elif c == command[3]:
-            answer = "FEATURES 2"
+            answer = "The word with the maximum TF-IDF is '" + most_important_word(tf_idf_dico(tf_idf(d),d)) + "'"
         elif c == command[4]:
-            answer = "FEATURES 3"
+            t = most_word_of_chirac()
+            answer = ("'" + t[0] + "' is the most repeted word by Jacques Chirac.\n"
+                                   "For information this word has been repeted "+
+                      str(t[1]) + " times !")
         elif c == command[5]:
-            answer = "FEATURES 4"
+            t = nations_word_on_speeches(tf_idf_dico(tf_idf(d), d))
+            print(t[0])
+            answer = ("Presidents who have speak about Nation are " + ", ".join(t[0]) +
+                      " and the one who repeted the most is " + presidents_first_name(t[1]))
         elif c == command[6]:
-            answer = "FEATURES 5"
+            answer = "The first president who talked about ecology or climat is " + presidents_first_name(first_pres_to_talk_eco(tf_idf_dico(tf_idf(d),d)))
         elif c == command[7]:
-            answer = "FEATURES 6"
+            answer = ("Impossible ? If we want the words says by all the presidents we have idf = log(8/8) = log(1) = 0 and the only "
+                      "words with this tf_idf score are the unimportant word...")
         elif c == command[8]:
-            answer = "Hello I'm Bobby ! My creators are Alban and Paul !\nTwo genius who made the better chatbot (better than CHAT GPT)"
+            answer = "Hello I'm Bobby ! My creators are Alban and Paul !\nTwo genius who made the best chatbot (better than CHAT GPT)"
         elif c == command[9]:
             exit()
         elif c == command[10]:
@@ -58,8 +71,8 @@ def dire(c):
     return answer
 
 def dis_gui():
-    global RequestLabel
-    global DisplayLabel
+    global requestlabel
+    global displaylabel
     global win
     win = Tk()
     win.title('Bobby - The greatest chatbot !')
@@ -67,17 +80,22 @@ def dis_gui():
     win.resizable(width=False, height=False)
     win.configure(background="#404258")
 
-    DisplayFrame = Frame(win)
-    DisplayFrame.place(relx=0.1, rely=0.1)
-    DisplayLabel = Text(DisplayFrame, height=20, width=63, font="Roboto", bg="#404258", fg="white", bd=0, wrap=WORD)
-    DisplayLabel.pack(side = 'left',fill='x')
-    scroll = Scrollbar(DisplayFrame, orient='vertical', command=DisplayLabel.yview)
-    scroll.pack(expand='yes', fill='y')
+    displayframe = Frame(win)
+    displayframe.place(relx=0.1, rely=0.1)
+    welcomelabel = Label(win, text="Bobby Chatbot Interface", bg="#404258", fg="white", bd=0, font=("Roboto", 25, "bold"))
+    welcomelabel.place(relx=0.1, rely=0.05)
+    scroll = ttk.Scrollbar(displayframe, orient='vertical')
+    scroll.pack(expand=1, fill='y', side='right')
+    displaylabel = Text(displayframe, height=20, width=63, font="Roboto", bg="#404258", fg="white", bd=0, wrap=WORD,
+                        yscrollcommand=scroll.set, selectbackground="black")
+    displaylabel.pack(side = 'left',fill='x')
 
-    RequestLabel = Entry(win, width=60, font="Roboto", bg="#474E68", fg="white", insertbackground="white", bd=0)
-    RequestLabel.place(relx=0.1, rely=0.9)
-    ButtonSend = Button(win, text="Send", command=printS, height=1, pady=10, padx=5, width=5, bd=0, bg="#474E68", fg="white")
-    ButtonSend.place(relx=0.85, rely=0.9)
+
+    requestlabel = Entry(win, width=60, font="Roboto", bg="#474E68", fg="white", insertbackground="white", bd=0,
+                         selectbackground="black")
+    requestlabel.place(relx=0.1, rely=0.9)
+    buttonsend = Button(win, text="Send", command=printS, height=1, pady=10, padx=5, width=5, bd=0, bg="#474E68", fg="white")
+    buttonsend.place(relx=0.85, rely=0.9)
 
     win.bind('<Return>', lambda event: printS())
 

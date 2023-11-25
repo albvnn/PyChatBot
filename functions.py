@@ -37,41 +37,6 @@ def display_names_list():
         L.append(v + " " + k)
     return L
 
-
-def clean_files_lower_case():
-    directory = "./speeches" # Specify the directory containing the original speeches
-
-    files_names = list_of_files(directory, "txt") # Get the list of file names with the extension '.txt'
-
-    for i in files_names:
-        with open('./speeches/' + i, "r") as f1, open('./cleaned/' + i, "w") as f2: # Open the original file for reading and the cleaned for writing
-            for l in f1.readlines():
-                for c in l:
-                    if 65 <= ord(c) <= 90: # Check if the character is an uppercase letter
-                        c = chr(ord(c) + 32) # Convert the uppercase letter to lowercase
-                    f2.write(c) # Write the character to the cleaned file
-
-
-def clean_files_punctuation():
-    dicoclean = {"e": ["Ã©", "Ã¨", "Ãª"], "c": ["Ã§"], "a": ["Ã", "a¢"], "u": ["a¹", "a»"],
-                 "i": ["a®"], " ": list("-'"), "": list("!$%&(),./:;<=>?[]^_`{|}~")} # Define a dictionary to map replacements for specific characters
-    
-    directory = "./cleaned"
-    
-    files_names = list_of_files(directory, "txt") # Get the list of file names with the "txt" extension
-    
-    for i in files_names:
-        with open('./cleaned/' + i, "r") as f: # Open the cleaned file for reading
-            content = f.read() # Read the content of the file
-            
-            for k, v in dicoclean.items(): # Iterate through the dictionary and replace specific character sequences
-                for j in v:
-                    content = content.replace(j, k)
-        
-        with open('./cleaned/' + i, "w", encoding="utf-8") as f: # Write the modified content back to the cleaned file
-            f.write(content)
-
-
 #TF (Term Frequency)
 def tf(input_str):
     word_list = input_str.split(' ')
@@ -87,13 +52,13 @@ def tf(input_str):
     return word_freq_dict
 
 
-def idf(directory="./cleaned"):
+def idf(directory):
     doc_freq = {}
     
     files_names = list_of_files(directory, "txt")
     
     for i in files_names:
-        with open(directory + "/" + i, "r") as f: # Open the cleaned file for reading
+        with open(directory + i, "r") as f: # Open the cleaned file for reading
             unique_words = []
             
             content = f.readlines() # Read the content of the file line by line
@@ -133,24 +98,24 @@ def transpose_matrix(matrix):
     return transposed_matrix
 
 
-def tf_idf(directory="./cleaned"):
+def tf_idf(directory):
     tf_idf_matrix = []
 
-    didf = idf()
+    didf = idf(directory)
 
     files_names = list_of_files(directory, "txt")
 
     for i in files_names:
         fl = ""
-        
-        with open(directory + "/" + i, "r") as f: # Open the cleaned file for reading
+
+        with open(directory + i, "r") as f: # Open the cleaned file for reading
             tf_idf_doc = []
 
             ls = f.readlines() # Read the content of the file line by line
 
             for l in ls: # Concatenate lines into a single string
                 fl += l[:-1] + " "
-            
+
             dtf = tf(fl) # Calculate the term frequency for the document
 
             # Calculate the TF-IDF score for each word in the document
@@ -164,7 +129,7 @@ def tf_idf(directory="./cleaned"):
     return transpose_matrix(tf_idf_matrix) # Transpose the TF-IDF matrix
 
 
-def tf_idf_dico(matrix_tfidf, directory="./cleaned"):
+def tf_idf_dico(matrix_tfidf, directory):
     tf_idf_dico = {"files": list_of_files(directory, "txt")} # Initialize the TF-IDF dictionary
 
     i = 0
@@ -173,6 +138,5 @@ def tf_idf_dico(matrix_tfidf, directory="./cleaned"):
         tf_idf_dico[k] = matrix_tfidf[i] # Add the word and its corresponding TF-IDF vector to the dictionary
         i += 1
 
+    del tf_idf_dico['']
     return tf_idf_dico
-
-
