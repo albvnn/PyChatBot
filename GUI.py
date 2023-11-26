@@ -58,7 +58,6 @@ def dire(c):
                       str(t[1]) + " times !")
         elif c == command[5]:
             t = nations_word_on_speeches(tf_idf_dico(tf_idf(d), d))
-            print(t[0])
             answer = ("Presidents who have speak about Nation are " + ", ".join(t[0]) +
                       " and the one who repeted the most is " + presidents_first_name(t[1]))
         elif c == command[6]:
