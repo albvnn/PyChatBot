@@ -1,3 +1,4 @@
+'''Import libraries'''
 from tkinter import *
 from tkinter import ttk
 from features import *
@@ -6,10 +7,12 @@ from clean_functions import *
 
 d = clean_all_files()
 def get_sending():
+    '''Assigns the string representation of the variable 'requestlabel' and 'LabelOnTime' and returns this value as a string.'''
     global LabelOnTime
     LabelOnTime = str(requestlabel.get())
     return str(LabelOnTime)
 def printS():
+    '''Updates the displaylabel, clearing the input field if the response is "/clean."'''
     global LabelOnTime
     get_sending()
     a = dire(LabelOnTime)
@@ -24,6 +27,7 @@ def printS():
     requestlabel.delete("0", "end")
 
 def dire(c):
+    '''Handles commands and provides corresponding responses, including information about available features, commands, and specific functionalities.'''
     command = ['/help', '/features', '/feature1', '/feature2', '/feature3', '/feature4', '/feature5', '/feature6',
                '/info', '/exit', '/clean']
     answer = "This command doesn't exist. \n Please do '/help' for have the list of commands."
@@ -71,6 +75,7 @@ def dire(c):
     return answer
 
 def dis_gui():
+    '''Sets up the graphical user interface for the chatbot.'''
     global requestlabel
     global displaylabel
     global win
