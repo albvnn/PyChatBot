@@ -9,7 +9,7 @@ def unimportant_words(dico_tfidf):           #feature 1
             L.append(k)
     return L
 
-unimportant_words = unimportant_words(tf_idf_dico(tf_idf("./cleaned/"), "./cleaned/"))
+un_words = unimportant_words(tf_idf_dico(tf_idf("./cleaned/"), "./cleaned/"))
 def most_important_word(dico_tfidf):        #feature 2
     '''This function finds the word with the highest average TF-IDF score across all documents.'''
     del dico_tfidf["files"]
@@ -72,11 +72,11 @@ def first_pres_to_talk_eco(dico_tfidf):         #feature 5
 
 def all_pres_say_words(dico_tfidf):         #feature 6
     '''F6'''
-    global unimportant_words
+    global un_words
     del dico_tfidf["files"]
     L = []
     for k,v in dico_tfidf.items():
-        if k not in unimportant_words:
+        if k not in un_words:
             if v[0] + v[1] != 0 and v[5] + v[6] != 0:
                 v = list(set(v) - {v[0], v[1], v[5], v[6]})
                 if 0.0 not in v:
