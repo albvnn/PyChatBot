@@ -30,7 +30,7 @@ def presidents_first_name(lname):
 
 
 def display_names_list():
-    '''Return in a list all the names of the Prpesidents'''
+    '''Return in a list all the names of the Presidents'''
     L = []
     global lnames
     for k, v in lnames.items():

@@ -63,8 +63,7 @@ def dire(c):
         elif c == command[6]:
             answer = "The first president who talked about ecology or climat is " + presidents_first_name(first_pres_to_talk_eco(tf_idf_dico(tf_idf(d),d)))
         elif c == command[7]:
-            answer = ("Impossible ? If we want the words says by all the presidents we have idf = log(8/8) = log(1) = 0 and the only "
-                      "words with this tf_idf score are the unimportant word...")
+            answer = ("All the presidents say this words : " + ", ".join(all_pres_say_words(tf_idf_dico(tf_idf(d), d))))
         elif c == command[8]:
             answer = "Hello I'm Bobby ! My creators are Alban and Paul !\nTwo genius who made the best chatbot (better than CHAT GPT)"
         elif c == command[9]:

@@ -1,6 +1,6 @@
 from functions import *
 
-def important_words(dico_tfidf):           #feature 1
+def unimportant_words(dico_tfidf):           #feature 1
     '''Identifies words that have a TF-IDF score of 0 across all documents in the corpus.'''
     L = []
     del dico_tfidf["files"]
@@ -9,6 +9,7 @@ def important_words(dico_tfidf):           #feature 1
             L.append(k)
     return L
 
+unimportant_words = unimportant_words(tf_idf_dico(tf_idf("./cleaned/"), "./cleaned/"))
 def most_important_word(dico_tfidf):        #feature 2
     '''This function finds the word with the highest average TF-IDF score across all documents.'''
     del dico_tfidf["files"]
@@ -68,7 +69,16 @@ def first_pres_to_talk_eco(dico_tfidf):         #feature 5
                         minv = v[i]
     return minname
 
+
 def all_pres_say_words(dico_tfidf):         #feature 6
-    '''Impossible ? If we want the words says by all the presidents we have idf = log(8/8) = log(1) = 0 and the only
-    words with this tf_idf score are the unimportant word...'''
-    return False
+    '''F6'''
+    global unimportant_words
+    del dico_tfidf["files"]
+    L = []
+    for k,v in dico_tfidf.items():
+        if k not in unimportant_words:
+            if v[0] + v[1] != 0 and v[5] + v[6] != 0:
+                v = list(set(v) - {v[0], v[1], v[5], v[6]})
+                if 0.0 not in v:
+                    L.append(k)
+    return L
