@@ -5,7 +5,7 @@ from features import *
 from functions import *
 from clean_functions import *
 
-d = clean_all_files()
+d = "./cleaned/"
 def get_sending():
     '''Assigns the string representation of the variable 'requestlabel' and 'LabelOnTime' and returns this value as a string.'''
     global LabelOnTime

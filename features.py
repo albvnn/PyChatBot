@@ -1,5 +1,8 @@
 from functions import *
 
+if not os.path.isdir("cleaned"):
+    os.mkdir(os.path.join(os.getcwd(), "cleaned"))
+
 def unimportant_words(dico_tfidf):           #feature 1
     '''Identifies words that have a TF-IDF score of 0 across all documents in the corpus.'''
     L = []

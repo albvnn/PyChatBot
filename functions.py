@@ -1,5 +1,6 @@
 import os
 import string
+from clean_functions import clean_lower_case, clean_punctuation
 from math import *
 
 lnames = {"Chirac": "Jacques", "Giscard dEstaing": "Valéry", "Hollande": "François", "Macron": "Emmanuel",
@@ -80,7 +81,7 @@ def idf(directory):
     
     # Calculate the inverse document frequency for each word
     for word, freq in doc_freq.items():
-        doc_freq[word] = log(1 / (freq / len(files_names)))
+        doc_freq[word] = log10(len(files_names) / freq)
     
     return doc_freq
 
@@ -140,3 +141,69 @@ def tf_idf_dico(matrix_tfidf, directory):
 
     del tf_idf_dico['']
     return tf_idf_dico
+
+def question_tf_idf(s, dicoform=False):
+    tfidfd = tf_idf_dico(tf_idf("./cleaned/"), "./cleaned/")
+    tf_idf_v = []
+    tf_idf_d = {}
+    s = clean_punctuation(clean_lower_case(s))
+    tfd = tf(s)
+    idfd = idf("./cleaned/")
+    q = []
+    for j in tfd.keys():
+        q.append(j)
+    for k in tfidfd.keys():
+        if k not in q:
+            tfd[k] = 0
+    for k, v in idfd.items():
+        tf_idf_v.append(v*tfd[k])
+        tf_idf_d[k] = v*tfd[k]
+    if dicoform:
+        return tf_idf_d
+    return tf_idf_v
+
+def norm(a):
+    s = 0
+    for i in a:
+        s += i**2
+    return sqrt(s)
+
+def cosine_similiraty(a, b):
+    scalar_p = 0
+    for i in range(len(a)):
+            scalar_p += a[i]*b[i]
+    return (scalar_p / norm(a)*norm(b))
+
+def most_significant_document(tfidf_question, tfidf_matrix):
+    lf = list_of_files("./cleaned", "txt")
+    tfidf_matrix = transpose_matrix(tfidf_matrix)
+    k = 0
+    maxk = 0
+    max = 0
+    for i in tfidf_matrix:
+        cverif = cosine_similiraty(tfidf_question, i)
+        if max <= cverif:
+            max = cverif
+            maxk = k
+        k += 1
+    return lf[maxk]
+
+def most_important_question_term(s):
+    tfidf_question = question_tf_idf(s, True)
+    maxk = ""
+    maxv = 0.0
+    for k, v in tfidf_question.items():
+        if maxv < v:
+            maxv = v
+            maxk = k
+    return maxk
+
+def auto_response(most_imp_term, most_sin_doc):
+    with open("./speeches/" + most_sin_doc, "r", encoding="utf-8") as f:
+        content = "f.readlines()"
+        for l in f.readlines():
+            content += l[:-1] + " "
+        content = content.split(".")
+        for i in content:
+            if most_imp_term in i:
+                return i
