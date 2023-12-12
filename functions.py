@@ -200,10 +200,11 @@ def most_important_question_term(s):
 
 def auto_response(most_imp_term, most_sin_doc):
     with open("./speeches/" + most_sin_doc, "r", encoding="utf-8") as f:
-        content = "f.readlines()"
-        for l in f.readlines():
-            content += l[:-1] + " "
-        content = content.split(".")
-        for i in content:
+        content = f.readlines()
+        L = []
+        for l in content:
+            content = l[:-1] + " "
+            L.append(content)
+        for i in L:
             if most_imp_term in i:
                 return i

@@ -30,45 +30,48 @@ def dire(c):
     '''Handles commands and provides corresponding responses, including information about available features, commands, and specific functionalities.'''
     command = [['/help'], ['/features', '/f'], ['/feature1', '/f1'], ['/feature2', '/f2'], ['/feature3', '/f3'], ['/feature4', '/f4'], ['/feature5', '/f5']
         , ['/feature6', '/f6'], ['/info'], ['/exit'], ['/clean']]
-    answer = "This command doesn't exist. \n Please do '/help' for have the list of commands."
-    if c in command[0]:
-        answer = ("Hey ! There is few command : "
-                  "\n - '/help' : lists of the differents functions"
-                  "\n - '/info' : some info about me ! "
-                  "\n - '/features' or '/f' : lists of the differents features "
-                  "\n - '/clean' : for clean the previous discussion between you and me ! "
-                  "\n - '/exit' : exit the app ")
-    elif c in command[1]:
-        answer = ("There is few features :"
-                  "\n - '/feature1' or '/f1' : Displays words with a TD-IDF equal to 0, so the unimportant words."
-                  "\n - '/feature2' or '/f2' : Identifies and display the most important word in the documents analyzed."
-                  "\n - '/feature3' or '/f3' : Display the words most often repeated by President Chirac."
-                  "\n - '/feature4' or '/f4' : Show the presidents who have spoken of the word 'Nation', and indicate the one who said it the most. "
-                  "\n - '/feature5' or '/f5' : Show the first president to talk about climate ('climat') and ecology ('écologie')."
-                  "\n - '/feature6' or '/f6' : What word(s) did all the presidents mention? (Excluding 'unimportant' words)")
-    elif c in command[2]:
-        answer = "There is the least important words in the corpus of speeches : " + ", ".join(unimportant_words(tf_idf_dico(tf_idf(d), d)))
-    elif c in command[3]:
-        answer = "The word with the maximum TF-IDF is '" + most_important_word(tf_idf_dico(tf_idf(d),d)) + "'"
-    elif c in command[4]:
-        t = most_word_of_chirac()
-        answer = ("'" + t[0] + "' is the most repeted word by Jacques Chirac.\n"
-                               "For information this word has been repeted "+
-                  str(t[1]) + " times !")
-    elif c in command[5]:
-        t = nations_word_on_speeches(tf_idf_dico(tf_idf(d), d))
-        answer = ("Presidents who have speak about Nation are " + ", ".join(t[0]) +
-                  " and the one who repeted the most is " + presidents_first_name(t[1]))
-    elif c in command[6]:
-        answer = "The first president who talked about ecology or climat is " + presidents_first_name(first_pres_to_talk_eco(tf_idf_dico(tf_idf(d),d)))
-    elif c in command[7]:
-        answer = ("All the presidents say this words : " + ", ".join(all_pres_say_words(tf_idf_dico(tf_idf(d), d))))
-    elif c in command[8]:
-        answer = "Hello I'm Bobby ! My creators are Alban and Paul !\nTwo genius who made the best chatbot (better than CHAT GPT)"
-    elif c in command[9]:
-        exit()
-    elif c in command[10]:
-        answer = "/clean"
+    if c[0] == "/":
+        answer = "This command doesn't exist. \n Please do '/help' for have the list of commands."
+        if c in command[0]:
+            answer = ("Hey ! There is few command : "
+                      "\n - '/help' : lists of the differents functions"
+                      "\n - '/info' : some info about me ! "
+                      "\n - '/features' or '/f' : lists of the differents features "
+                      "\n - '/clean' : for clean the previous discussion between you and me ! "
+                      "\n - '/exit' : exit the app ")
+        elif c in command[1]:
+            answer = ("There is few features :"
+                      "\n - '/feature1' or '/f1' : Displays words with a TD-IDF equal to 0, so the unimportant words."
+                      "\n - '/feature2' or '/f2' : Identifies and display the most important word in the documents analyzed."
+                      "\n - '/feature3' or '/f3' : Display the words most often repeated by President Chirac."
+                      "\n - '/feature4' or '/f4' : Show the presidents who have spoken of the word 'Nation', and indicate the one who said it the most. "
+                      "\n - '/feature5' or '/f5' : Show the first president to talk about climate ('climat') and ecology ('écologie')."
+                      "\n - '/feature6' or '/f6' : What word(s) did all the presidents mention? (Excluding 'unimportant' words)")
+        elif c in command[2]:
+            answer = "There is the least important words in the corpus of speeches : " + ", ".join(unimportant_words(tf_idf_dico(tf_idf(d), d)))
+        elif c in command[3]:
+            answer = "The word with the maximum TF-IDF is '" + most_important_word(tf_idf_dico(tf_idf(d),d)) + "'"
+        elif c in command[4]:
+            t = most_word_of_chirac()
+            answer = ("'" + t[0] + "' is the most repeted word by Jacques Chirac.\n"
+                                   "For information this word has been repeted "+
+                      str(t[1]) + " times !")
+        elif c in command[5]:
+            t = nations_word_on_speeches(tf_idf_dico(tf_idf(d), d))
+            answer = ("Presidents who have speak about Nation are " + ", ".join(t[0]) +
+                      " and the one who repeted the most is " + presidents_first_name(t[1]))
+        elif c in command[6]:
+            answer = "The first president who talked about ecology or climat is " + presidents_first_name(first_pres_to_talk_eco(tf_idf_dico(tf_idf(d),d)))
+        elif c in command[7]:
+            answer = ("All the presidents say this words : " + ", ".join(all_pres_say_words(tf_idf_dico(tf_idf(d), d))))
+        elif c in command[8]:
+            answer = "Hello I'm Bobby ! My creators are Alban and Paul !\nTwo genius who made the best chatbot (better than CHAT GPT)"
+        elif c in command[9]:
+            exit()
+        elif c in command[10]:
+            answer = "/clean"
+    else:
+        answer = auto_response(most_important_question_term(c), most_significant_document(question_tf_idf(c), tf_idf("./cleaned/")))
     return answer
 
 def dis_gui():

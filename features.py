@@ -81,7 +81,7 @@ def all_pres_say_words(dico_tfidf):         #feature 6
     for k,v in dico_tfidf.items():
         if k not in un_words:
             if v[0] + v[1] != 0 and v[5] + v[6] != 0:
-                v = list(set(v) - {v[0], v[1], v[5], v[6]})
+                v.pop(0), v.pop(0), v.pop(3), v.pop(4)
                 if 0.0 not in v:
                     L.append(k)
     return L
