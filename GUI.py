@@ -71,7 +71,7 @@ def dire(c):
         elif c in command[10]:
             answer = "/clean"
     else:
-        answer = auto_response(most_important_question_term(c), most_significant_document(question_tf_idf(c), tf_idf("./cleaned/")))
+        answer = auto_response(most_important_question_term(c), most_significant_document(question_tf_idf(c), tf_idf("./cleaned/")), c)
     return answer
 
 def dis_gui():

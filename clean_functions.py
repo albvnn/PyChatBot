@@ -1,5 +1,6 @@
 import os
 def list_of_files(directory, extension):
+    """Retrieves a list of file names with the specified extension in the given directory."""
     files_names = []
     for filename in os.listdir(directory):
         if filename.endswith(extension):
@@ -8,15 +9,17 @@ def list_of_files(directory, extension):
 
 def clean_lower_case(s):
     for a in s:
-        if 65 <= ord(a) <= 90:
-            c = chr(ord(a) + 32)
-            s = s.replace(a, c)
+        if 65 <= ord(a) <= 90:  # Check if the character is an uppercase letter
+            c = chr(ord(a) + 32)    # Convert the uppercase letter to lowercase using ASCII values
+            s = s.replace(a, c)    # Replace the original uppercase letter with the lowercase one in the string
     return s
 
 def clean_punctuation(s):
+    # Dictionary mapping base characters to their variations (accents, special characters)
     dicoclean = {"e": ["é", "è", "ê", "ë"], "c": ["ç"], "a": ["à", "â", "ä", "Ã%"], "u": ["û", "ü"],
                  "i": ["ï", "î"], "o": ["ô"], "oe": ["œ"], " ": ["-", "'", " "], "": list(
             '"!$%&(),./:;<=>?[]^_`{|}~')}
+    # Iterate through the dictionary and replace specified characters in the string
     for k, v in dicoclean.items():
         for j in v:
             s = s.replace(j, k)

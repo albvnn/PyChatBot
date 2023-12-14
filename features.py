@@ -3,7 +3,7 @@ from functions import *
 if not os.path.isdir("cleaned"):
     os.mkdir(os.path.join(os.getcwd(), "cleaned"))
 
-def unimportant_words(dico_tfidf):           #feature 1
+def unimportant_words(dico_tfidf):
     '''Identifies words that have a TF-IDF score of 0 across all documents in the corpus.'''
     L = []
     del dico_tfidf["files"]
@@ -13,7 +13,7 @@ def unimportant_words(dico_tfidf):           #feature 1
     return L
 
 un_words = unimportant_words(tf_idf_dico(tf_idf("./cleaned/"), "./cleaned/"))
-def most_important_word(dico_tfidf):        #feature 2
+def most_important_word(dico_tfidf):
     '''This function finds the word with the highest average TF-IDF score across all documents.'''
     del dico_tfidf["files"]
     maxk = ""
@@ -24,7 +24,7 @@ def most_important_word(dico_tfidf):        #feature 2
             maxv = sum(v)/len(v)
     return maxk
 
-def most_word_of_chirac():        #feature 3
+def most_word_of_chirac():
     '''Reads two files related to Chirac's nominations, combines the text, calculates the term frequency, and returns the word with the highest frequency.'''
     fl = ""
     with open('./cleaned/Nomination_Chirac1.txt', 'r') as f1, open('./cleaned/Nomination_Chirac2.txt', 'r') as f2:
@@ -43,7 +43,7 @@ def most_word_of_chirac():        #feature 3
             maxik = k
     return maxik, maxiv
 
-def nations_word_on_speeches(dico_tfidf):       #feature 4
+def nations_word_on_speeches(dico_tfidf):
     '''This function looks for documents where the word "nation" has a non-zero TF-IDF score and returns a list of titles and the title with the minimum TF-IDF score.'''
     L = []
     minname = ""
@@ -59,7 +59,7 @@ def nations_word_on_speeches(dico_tfidf):       #feature 4
                     minv = v[i]
     return L, names_extract_titles(minname)
 
-def first_pres_to_talk_eco(dico_tfidf):         #feature 5
+def first_pres_to_talk_eco(dico_tfidf):
     '''Identifies the president who first talked about "climat" or "ecologie" based on the highest TF-IDF score.'''
     minname = ""
     minv = 0
@@ -73,8 +73,8 @@ def first_pres_to_talk_eco(dico_tfidf):         #feature 5
     return minname
 
 
-def all_pres_say_words(dico_tfidf):         #feature 6
-    '''F6'''
+def all_pres_say_words(dico_tfidf):
+    '''Display all the words that presidents says, aside unimportant words.'''
     global un_words
     del dico_tfidf["files"]
     L = []
