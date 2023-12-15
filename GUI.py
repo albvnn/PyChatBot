@@ -20,6 +20,8 @@ def printS():
         displaylabel.config(state=NORMAL)
         displaylabel.delete("1.0", "end")
         displaylabel.config(state=DISABLED)
+    elif a == None:
+        a = dire(LabelOnTime)
     else:
         displaylabel.config(state=NORMAL)
         displaylabel.insert(INSERT, "\n\n" + "You : " + LabelOnTime + "\n\n" + "Bobby : " + a + "\n\n")
@@ -30,7 +32,9 @@ def dire(c):
     '''Handles commands and provides corresponding responses, including information about available features, commands, and specific functionalities.'''
     command = [['/help'], ['/features', '/f'], ['/feature1', '/f1'], ['/feature2', '/f2'], ['/feature3', '/f3'], ['/feature4', '/f4'], ['/feature5', '/f5']
         , ['/feature6', '/f6'], ['/info'], ['/exit'], ['/clean']]
-    if c[0] == "/":
+    if c == "":
+        answer = None
+    elif c[0] == "/":
         answer = "This command doesn't exist. \n Please do '/help' for have the list of commands."
         if c in command[0]:
             answer = ("Hey ! There is few command : "
