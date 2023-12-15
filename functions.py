@@ -220,7 +220,8 @@ def most_important_question_term(s):
     tfidf_question = question_tf_idf(s, True)   # Calculate the TF-IDF dictionary for the input question string 's'
 
     # Initialize variables for tracking the most important term
-    maxk = ""
+    L = s.split(" ")
+    maxk = L[0]
     maxv = 0.0
 
     # Iterate through the terms and their corresponding TF-IDF values in the question
