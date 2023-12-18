@@ -9,6 +9,4 @@ clean_files_punctuation()
 from GUI import *
 
 if __name__ == "__main__":
-    #print(idf("./cleaned/"))
-    #Peux-tu me dire comment une nation peut-elle prendre soin du climat ?
     dis_gui()
