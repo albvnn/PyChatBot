@@ -1,6 +1,5 @@
-# pychatbot-hernandez-pascal-int2
-
-Produced by Alban Pascal and Paul Hernandez.
+# pychatbot
+Produced by Alban P and Paul Hernandez.
 
 Project link : https://github.com/Akes-exe/pychatbot-hernandez-pascal-int2
 
